@@ -1,0 +1,9 @@
+{
+  "name": "@modelsjs/react",
+  "version": "0.0.1",
+  "type": "module",
+  "dependencies": {
+    "@modelsjs/model": "^0.0.1",
+    "@modelsjs/resolver": "^0.0.1"
+  }
+}
