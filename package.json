@@ -14,11 +14,13 @@
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",
-    "start": "npm run start --workspaces --if-present"
+    "start": "npm run start --workspaces --if-present",
+    "docs": "yfm -i . -o docs"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@doc-tools/docs": "^3.17.1",
     "typescript": "^5.1.3"
   }
 }
