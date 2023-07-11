@@ -1,0 +1,15 @@
+[submodule "packages/model"]
+	path = packages/model
+	url = git@github.com:modelsjs/model.git
+[submodule "packages/react"]
+	path = packages/react
+	url = git@github.com:modelsjs/react.git
+[submodule "packages/resolver"]
+	path = packages/resolver
+	url = git@github.com:modelsjs/resolver.git
+[submodule "packages/types"]
+	path = packages/types
+	url = git@github.com:modelsjs/types.git
+[submodule "packages/tsconfig"]
+	path = packages/tsconfig
+	url = git@github.com:modelsjs/tsconfig.git
