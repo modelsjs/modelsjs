@@ -1,1 +1,5 @@
+.env
+
+/docs/*/packages
+/docs/build
 /node_modules

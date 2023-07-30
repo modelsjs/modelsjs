@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -e
+
+yfm build -i docs -o docs/build --output-format md --add-map-file --allow-custom-resources

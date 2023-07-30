@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+
+#source .env
+
+npx yfm publish -i docs/build --bucket modelsjs-stable \
+  --prefix rev/test \
+  --access-key-id AKIA3EYQS3AMAYIKZO4O \
+  --secret-access-key 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

@@ -1,0 +1,6 @@
+title: ModelsJS
+href: index.md
+items:
+  - include:
+      path: packages/model/toc-i.yaml
+      mode: link

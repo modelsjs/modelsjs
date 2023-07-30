@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+for LANG in ru en
+do
+  DST="$PWD/docs/$LANG/packages"
+
+  mkdir -p "$DST"
+
+  LANG=$LANG DST="$DST" npm run docs:link --workspaces --if-present
+done

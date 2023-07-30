@@ -1,0 +1,72 @@
+name: Build Docs
+
+on:
+  pull_request:
+  workflow_call:
+    inputs:
+      rev:
+        required: true
+        type: string
+    secrets:
+      PROD_AWS_BUCKET:
+        required: true
+      PROD_AWS_KEY_ID:
+        required: true
+      PROD_AWS_SECRET_ACCESS_KEY:
+        required: true
+
+env:
+  REV: "pr-${{ github.event.pull_request.number }}"
+  LINT_ROOT: /tmp/lint
+  BUILD_ROOT: /tmp/docs
+  LANG: en
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
+      - id: cache-npm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        continue-on-error: true
+        run: npm list
+      - run: npm install
+      - run: npm run lint
+      - run: npm run build
+      - uses: actions/upload-artifact@v3
+        with:
+          name: docs
+          path: ${{ env.BUILD_ROOT }}
+          if-no-files-found: error
+          retention-days: 7
+  upload-to-storage:
+    needs: [ build-docs ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: docs
+          path: docs
+      - id: rev-name
+        run: |
+          [ -n "${{ inputs.rev }}" ] && echo "::set-output name=rev::${{ inputs.rev }}" || echo "::set-output name=rev::$REV"
+      - name: Upload S3
+        uses: jakejarvis/s3-sync-action@master
+        env:
+          AWS_S3_BUCKET: ${{ secrets.PROD_AWS_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.PROD_AWS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY}}
+          AWS_REGION: eu-central-1
+          DEST_DIR: 'rev/${{ steps.rev-name.outputs.rev }}'
+          SOURCE_DIR: 'docs'

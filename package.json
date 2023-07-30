@@ -1,5 +1,5 @@
 {
-  "name": "@modelsjs/metapackage",
+  "name": "@modelsjs/modelsjs",
   "version": "1.0.0",
   "type": "module",
   "description": "",
@@ -15,7 +15,9 @@
   "scripts": {
     "build": "npm run build --workspaces --if-present",
     "start": "npm run start --workspaces --if-present",
-    "docs": "yfm -i . -o docs"
+    "docs:link": "scripts/docs/link",
+    "docs:build": "scripts/docs/build",
+    "docs:publish": "scripts/docs/publish"
   },
   "author": "",
   "license": "ISC",

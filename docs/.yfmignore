@@ -1,0 +1,7 @@
+build/**
+packages/*/build/**
+packages/*/toc.yaml
+**/*.@(js|ts|tsx|css)
+**/package.json
+**/package-lock.json
+**/tsconfig.json
